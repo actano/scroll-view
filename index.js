@@ -6,60 +6,52 @@
 var Tween = require('tween');
 var raf = require('raf');
 
-/**
- * Expose `scrollTo`.
- */
 
-module.exports = scrollTo;
 
-/**
- * Scroll to `(x, y)`.
- *
- * @param {Number} x
- * @param {Number} y
- * @api public
- */
+ScrollView = function(el) {
+   this.element = el;
+};
 
-function scrollTo(x, y, options) {
-  options = options || {};
+ScrollView.prototype.setScrollOffset = function(o){
+    this.element.scrollTop = o.top;
+    this.element.scrollLeft = o.left;
+};
 
-  // start position
-  var start = scroll();
+ScrollView.prototype.getScrollOffset = function() {
+    return { top: this.element.scrollTop, left: this.element.scrollLeft };
+};
 
-  // setup tween
-  var tween = Tween(start)
-    .ease(options.ease || 'out-circ')
-    .to({ top: y, left: x })
-    .duration(options.duration || 1000);
+ScrollView.prototype.scrollTo = function(x, y, options) {
+    options = options || {};
 
-  // scroll
-  tween.update(function(o){
-    window.scrollTo(o.left | 0, o.top | 0);
-  });
+    // start position
+    var start = this.getScrollOffset();
 
-  // handle end
-  tween.on('end', function(){
-    animate = function(){};
-  });
+    // setup tween
+    var tween = Tween(start)
+        .ease(options.ease || 'out-circ')
+        .to({ top: y , left: x })
+        .duration(options.duration || 1000);
 
-  // animate
-  function animate() {
-    raf(animate);
-    tween.update();
-  }
+    // scroll
+    _this = this;
+    tween.update(function(o){
+        //console.log("left " + o.left);
+        _this.setScrollOffset(o);
+    });
 
-  animate();
+    // handle end
+    tween.on('end', function(){
+        animate = function(){};
+    });
+
+    // animate
+    function animate() {
+        raf(animate);
+        tween.update();
+    }
+
+    animate();
 }
 
-/**
- * Return scroll position.
- *
- * @return {Object}
- * @api private
- */
-
-function scroll() {
-  var y = window.pageYOffset || document.documentElement.scrollTop;
-  var x = window.pageXOffset || document.documentElement.scrollLeft;
-  return { top: y, left: x };
-}
+module.exports = ScrollView;

@@ -1,12 +1,13 @@
 {
-  "name": "scroll-to",
-  "repo": "component/scroll-to",
-  "description": "Smooth window scroll to position with requestAnimationFrame",
+  "name": "scroll-view",
+  "repo": "andirotter/scroll-view",
+  "description": "Smooth scroll an element to a given scroll offset with requestAnimationFrame",
   "version": "0.0.1",
   "keywords": ["scroll", "animate", "scroll-to"],
   "dependencies": {
     "component/raf": "1.0.0",
-    "component/tween": "1.0.0"
+    "component/tween": "1.0.0",
+    "jkroso/position": "*"
   },
   "development": {
     "component/event": "*"

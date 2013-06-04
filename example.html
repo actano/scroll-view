@@ -3,16 +3,18 @@
   <title>scroll-to - smooth javascript window scrolling with requestAnimationFrame</title>
   <style>
     body {
-      padding: 50px;
+      padding: 0px;
     }
 
     ul {
       min-width: 1500px;
+        padding: 0;
+        margin:  0;
     }
 
     ul li {
-      margin: 10px;
-      padding: 5px;
+      /*margin: 10px;
+      padding: 5px; */
       list-style: none;
       display: block;
       float: left;
@@ -22,17 +24,31 @@
       text-align: center;
       line-height: 100px;
     }
+    .container {
+        margin: 0;
+        padding: 0;
+        width: 400px;
+        height: 400px;
+        overflow: auto;
+        border: 1px solid black;
+    }
+
   </style>
 </head>
 <body>
-  <ul></ul>
+
+  <div class="container">
+      <ul></ul>
+  </div>
+
 
   <script src="build/build.js"></script>
 
   <script>
-    var scroll = require('scroll-to');
+    var ScrollView = require('scroll-view');
     var events = require('event');
     var ul = document.querySelector('ul');
+    var position = require('position');
 
     for (var i = 0; i < 500; i++) {
       var li = document.createElement('li');
@@ -40,11 +56,17 @@
       ul.appendChild(li);
     }
 
+    var container = document.querySelector('div');
+    var list = document.querySelector('ul');
+
+    var scrollView = new ScrollView(container);
+
     events.bind(window, 'click', function(e){
-      var x = e.pageX;
-      var y = e.pageY;
+      var x = position.offset(e.target,list).x;
+      var y = position.offset(e.target,list).y;
+      console.log(e.target);
       console.log('scrolling to (%s, %s)', x, y);
-      scroll(x, y);
+      scrollView.scrollTo(x, y);
     });
   </script>
 </body>
