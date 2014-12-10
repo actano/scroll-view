@@ -1,13 +1,17 @@
 
 # scroll-to
 
-  Smooth window scroll to position with requestAnimationFrame and [Tween](https://github.com/component/tween).
+  Smooth window scroll to position within an element with requestAnimationFrame and [Tween](https://github.com/component/tween).
 
 ## Installation
 
-    $ component install component/scroll-to
+    $ component install actano/scroll-view
 
 ## API
+
+### ScrollView (element)
+  
+  Binds ScrollView on element  
 
 ### scrollTo(x, y, [options])
 
